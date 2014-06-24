@@ -30,7 +30,7 @@ exports.handleRequest = function(request, response) {
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-   response.end(JSON.stringify("Hello, World!"));
+   response.end(JSON.stringify({results: ["Hello, World!"]}));
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
