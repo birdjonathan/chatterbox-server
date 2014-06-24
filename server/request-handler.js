@@ -5,37 +5,59 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
+// server.on('request', function(req, res){
+//   res.writeHead(200, {'Content-Type': 'text/plain'});
+//   res.write("Hello World");
+//   res.end();
+// });
+// server.listen(4000);
+var content = {
+  results: []
+};
+
 
 exports.handleRequest = function(request, response) {
+  var result;
   /* the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
 
   /* Documentation for both request and response can be found at
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
-
-  console.log("Serving request type " + request.method + " for url " + request.url);
-
-  if (request.method === 'POST' && request.url === "/classes/messages"){
-     var statusCode = 201;
-  } else { 
-     var statusCode = 200;
-  }
-
-  /* Without this line, this server wouldn't work. See the note
-   * below about CORS. */
   var headers = defaultCorsHeaders;
-
   headers['Content-Type'] = "text/plain";
 
+  console.log("Serving request type " + request.method + " for url " + request.url);
+  var postData = " ";
+  if (request.method === 'POST' && request.url === "/classes/messages"){
+  request.on('data', function(chunk){
+    postData.concat(chunk);
+  });
+  request.on('end', function(){
+    result = postData;
+    content.results.push(result);
+  });
+    var statusCode = 201;
+  } else if (request.method === "GET" && request.url === "/classes/messages") {
+    var statusCode = 200;
+    content.results.push("Hello World");
+  } else {
+    var statusCode = 404;
+    content.results.push("404 not found");
+  }
+
+    response.writeHead(statusCode, headers);
+    response.write(JSON.stringify(content));
+    response.end();
+};
+  /* Without this line, this server wouldn't work. See the note
+   * below about CORS. */
+
   /* .writeHead() tells our server what HTTP status code to send back */
-  response.writeHead(statusCode, headers);
 
   /* Make sure to always call response.end() - Node will not send
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-   response.end(JSON.stringify({results: ["Hello, World!"]}));
-};
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
  * This CRUCIAL code allows this server to talk to websites that
