@@ -39,22 +39,17 @@ exports.handleRequest = function(request, response) {
         content.results.push(result);
       }
       response.writeHead(statusCode, headers);
-      response.write(JSON.stringify(content ));
-      response.end();
+      response.end(JSON.stringify(content ));
     });
   } else if (request.method === "GET" && request.url === "/classes/messages") {
     var statusCode = 200;
-    content.results.push("Hello World");
     response.writeHead(statusCode, headers);
-    response.write(JSON.stringify(content));
-    response.end();
+    response.end(JSON.stringify(content));
   } else {
     var statusCode = 404;
     content.results.push("404 not found");
     response.writeHead(statusCode, headers);
-    response.write(JSON.stringify(content));
-    response.end();
-
+    response.end(JSON.stringify(content));
   }
 
 };
