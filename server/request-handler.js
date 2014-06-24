@@ -15,7 +15,11 @@ exports.handleRequest = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  var statusCode = 200;
+  if (request.method === 'POST' && request.url === "/classes/messages"){
+     var statusCode = 201;
+  } else { 
+     var statusCode = 200;
+  }
 
   /* Without this line, this server wouldn't work. See the note
    * below about CORS. */
