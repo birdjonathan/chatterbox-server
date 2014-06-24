@@ -28,26 +28,35 @@ exports.handleRequest = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
   var postData = " ";
-  if (request.method === 'POST' && request.url === "/classes/messages"){
-  request.on('data', function(chunk){
-    postData.concat(chunk);
-  });
-  request.on('end', function(){
-    result = postData;
-    content.results.push(result);
-  });
+  if (request.method === 'POST'){
     var statusCode = 201;
+    request.on('data', function(chunk){
+      postData += chunk;
+    });
+    request.on('end', function(){
+      result = JSON.parse(postData);
+      if (result) {
+        content.results.push(result);
+      }
+      response.writeHead(statusCode, headers);
+      response.write(JSON.stringify(content ));
+      response.end();
+    });
   } else if (request.method === "GET" && request.url === "/classes/messages") {
     var statusCode = 200;
     content.results.push("Hello World");
-  } else {
-    var statusCode = 404;
-    content.results.push("404 not found");
-  }
-
     response.writeHead(statusCode, headers);
     response.write(JSON.stringify(content));
     response.end();
+  } else {
+    var statusCode = 404;
+    content.results.push("404 not found");
+    response.writeHead(statusCode, headers);
+    response.write(JSON.stringify(content));
+    response.end();
+
+  }
+
 };
   /* Without this line, this server wouldn't work. See the note
    * below about CORS. */
