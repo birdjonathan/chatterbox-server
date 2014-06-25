@@ -39,15 +39,21 @@ exports.handleRequest = function(request, response) {
         content.results.push(result);
       }
       response.writeHead(statusCode, headers);
+      console.log("Inside 201" + request.url);
+      console.log("Inside 201" + content);
       response.end(JSON.stringify(content ));
     });
   // } else if (request.method === "GET" && request.url === "/classes/messages") {
   } else if (request.method === "GET" || request.method === "OPTIONS") {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
+     console.log("Inside 200" + request.url);
+      console.log("Inside 200" + content);
     response.end(JSON.stringify(content));
   } else {
     var statusCode = 404;
+     console.log("Inside 404" + request.url);
+      console.log("Inside 404" + content);
     content.results.push("404 not found");
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify(content));

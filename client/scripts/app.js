@@ -38,11 +38,11 @@ var app = {
   updateMessages: function(){
     $.ajax({
       url: app.server,
-      data: { order: '-createdAt'},
+     // data: { order: '-createdAt'},
       type: "GET",
       contentType: 'application/json',
       success: function(data){
-        app.clearMessages();
+       // app.clearMessages();
         var messages = data.results;
         for (var i = 0; i < messages.length; i++){
           app.addMessage(messages[i]);
