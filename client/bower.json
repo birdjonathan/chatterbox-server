@@ -1,0 +1,15 @@
+{
+  "name": "chatterbox",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jonbird81/2014-06-chatterbox-server",
+  "authors": [
+    "Jonathan Bird <jonbird81@gmail.com>"
+  ],
+  "description": "hack reactor",
+  "main": "index.html",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "underscore": "~1.6.0"
+  }
+}

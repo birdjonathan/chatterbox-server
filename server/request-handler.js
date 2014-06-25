@@ -42,7 +42,7 @@ exports.handleRequest = function(request, response) {
       response.end(JSON.stringify(content ));
     });
   // } else if (request.method === "GET" && request.url === "/classes/messages") {
-  } else if (request.method === "GET") {
+  } else if (request.method === "GET" || request.method === "OPTIONS") {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify(content));

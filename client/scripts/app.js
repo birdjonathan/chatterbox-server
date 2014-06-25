@@ -6,12 +6,12 @@ var sanitizeString = function (s) {
 
 var app = {
   init: function(){
-    this.server = "https://api.parse.com/1/classes/chatterbox";
+    this.server = "http://127.0.0.1:3000/classes/chatterbox";
     this.username = prompt(('What is your name?') || 'anonymous');
     this.rooom = 'lobby';
     this.friendNames = [];
     app.updateMessages();
-    
+
     $("#send .submit").on('click', function(e){
       e.preventDefault();
       app.handleSubmit();
@@ -55,7 +55,7 @@ var app = {
     });
     setTimeout(app.updateMessages, 1000);
   },
-  
+
   clearMessages: function(){
     $("#chats").empty();
   },
@@ -70,7 +70,7 @@ var app = {
       app.addFriend(friendName);
       $('.'+friendName).css('font-weight', 'bold');  //Apply css style to message from friends
     });
-    var messageText = $("<span>", {class: 'usertext'}).text(sanitizeString(message.text));    
+    var messageText = $("<span>", {class: 'usertext'}).text(sanitizeString(message.text));
     var messageHTML = $("<li>").append(messageUsername, ': ', messageText);
     $("#chats").append(messageHTML);
 
